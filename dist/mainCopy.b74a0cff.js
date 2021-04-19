@@ -117,74 +117,42 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"mainCopy.js":[function(require,module,exports) {
+window.dom = {
+  find: function find(selector, scope) {
+    return (scope || document).querySelectorAll(selector);
+  },
+  style: function style(node, name, value) {
+    if (arguments.length === 3) {
+      node.style[name] = value;
+    } else if (arguments.length === 2) {
+      if (typeof name === 'string') {
+        return node.style[name];
+      } else if (name instanceof Object) {
+        var object = name;
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
+        for (var key in object) {
+          node.style[key] = object[key];
+        }
       }
     }
+  },
+  each: function each(nodeList, fn) {
+    for (var i = 0; i < nodeList.length; i++) {
+      fn.call(null, nodeList[i]);
+    }
+  }
+};
+var div = dom.find('#test>.red')[0]; // 获取对应的元素
 
-    cssTimeout = null;
-  }, 50);
-}
+dom.style(div, 'color', 'red'); // 设置 div.style.color
 
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/bundle-url.js"}],"../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var divList = dom.find('.red'); // 获取多个 div.red 元素
+
+dom.each(divList, function (n) {
+  return console.log(n);
+}); // 遍历 divList 里的所有元素
+},{}],"../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -387,5 +355,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/index.js.map
+},{}]},{},["../../../../../Users/邓/AppData/Local/Yarn/Data/global/node_modules/parcel/src/builtins/hmr-runtime.js","mainCopy.js"], null)
+//# sourceMappingURL=/mainCopy.b74a0cff.js.map
